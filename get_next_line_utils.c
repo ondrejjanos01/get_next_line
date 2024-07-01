@@ -83,16 +83,6 @@ size_t	ft_strlen(const char *s)
 	return (len);
 }
 
-static char	*allocate_empty_string(void)
-{
-	char	*str;
-
-	str = (char *)malloc(1);
-	if (str)
-		str[0] = '\0';
-	return (str);
-}
-
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	size_t	i;
@@ -100,21 +90,14 @@ char	*ft_substr(char const *s, unsigned int start, size_t len)
 	char	*str;
 
 	if (!s)
-		return (NULL);
-	str_len = ft_strlen(s);
-	if (start >= str_len)
-		return (allocate_empty_string());
-	if (len > str_len - start)
-		len = str_len - start;
-	str = (char *)malloc(sizeof(char) * (len + 1));
+		return (0);
+	str = (char *)malloc(len + 1);
 	if (!str)
-		return (NULL);
-	i = 0;
-	while (i < len && s[start + i])
-	{
-		str[i] = s[start + i];
-		i++;
-	}
-	str[i] = '\0';
+		return (0);
+	i = start;
+	str_len = 0;
+	while (i < ft_strlen (s) && str_len < len)
+		str[str_len++] = s[i++];
+	str[str_len] = '\0';
 	return (str);
 }
